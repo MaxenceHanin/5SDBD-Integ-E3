@@ -21,7 +21,7 @@ The data storage service provides data about new york citibike traffic and stati
 |---|---|---|
 | list | GET /stations | Returns a list of citibike stations in NYC |
 | get | GET /stations/[station-ID] | Returns information on a specific station |
-| get_around | GET /stations/[station-ID]/around | Returns the list of all the stations near the origin station. |
+| get_around | GET /stations/[station-ID]/around | Returns the list of all the stations near the origin station.<br>**Parameters**:<br> - radius: All station must be in the given radius in meters |
 
 ## Predict Service
 
@@ -33,4 +33,4 @@ This service predicts the next station based on the origin station and the date.
 
 | Method | HTTP Request | Description |
 |---|---|---|
-| predict_next_station | GET /next_station/[station_id] | Returns a prediction of the arrival station, based on given parameters. You can pass the date by parameters, otherwise the date is assumed to be now. |
+| predict_next_station | GET /next_station/[station_id] | Returns a prediction of the arrival station, based on given parameters.<br>**Parameters**:<br> - date: The date of the prediction (default: now) |
