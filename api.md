@@ -21,4 +21,4 @@ This service predicts the next station based on the origin station and the date.
 
 | Method | HTTP Request | Description |
 |---|---|---|
-| get | POST /next_station/[station_id] | Returns a prediction of the arrival station, based on given parameters. You can pass the date by parameters, otherwise the date is assumed to be now. |
+| predict_next_station | GET /next_station/[station_id] | Returns a prediction of the arrival station, based on given parameters. You can pass the date by parameters, otherwise the date is assumed to be now. |
