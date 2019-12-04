@@ -1,17 +1,29 @@
 # Microservices API definition
 
-## Storage Service
+## ML Storage Service
 
 *URL: https://5sdbd-integ-e3.fr/storage/*
 
-The storage service aims to provide the models, e.g. for the prediction service. The only resource type is `Model`.
+The ML storage service aims to provide the models, e.g. for the prediction service. The only resource type is `Model`.
 
 | Method | HTTP Request | Description |
 |---|---|---|
 | list | GET /models | Returns a list of available models |
 | get | GET /models/[model-ID] | Returns model metadata and URL (json format) |
 
-## Predict service
+## Data Storage Service
+
+The data storage service provides data about new york citibike traffic and stations
+
+### Stations
+
+| Method | HTTP Request | Description |
+|---|---|---|
+| list | GET /stations | Returns a list of citibike stations in NYC |
+| get | GET /stations/[station-ID] | Returns information on a specific station |
+| get_around | GET /stations/[station-ID]/around | Returns the list of all the stations near the origin station. |
+
+## Predict Service
 
 *URL: https://5sdbd-integ-e3.fr/predict/*
 
