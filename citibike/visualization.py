@@ -1,3 +1,8 @@
+"""
+Set of methods to help with visualization of the dataset.
+- See what are the most used stations
+"""
+
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
