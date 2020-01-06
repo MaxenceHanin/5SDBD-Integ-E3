@@ -9,6 +9,8 @@ import numpy as np
 from sklearn.cluster import KMeans
 import sklearn.metrics as metrics
 
+# https://stats.stackexchange.com/questions/52625/visually-plotting-multi-dimensional-cluster-data
+
 df = pd.read_csv("../datasets/JC-201909-citibike-tripdata.csv")
 
 # Create hour and weekday from starttime
@@ -18,7 +20,9 @@ df["weekday"] = df["date"].dt.weekday
 
 # select only some features
 # add: "birth year", "gender" for suscribers
-featuresCols = ["start station latitude", "start station longitude", "hour", "weekday"]
+geographicalCols = ["start station latitude", "start station longitude", "end station latitude", "end station longitude"]
+temporalCols = ["hour", "weekday"]
+featuresCols = geographicalCols + temporalCols
 
 dataset = df[featuresCols]
 
