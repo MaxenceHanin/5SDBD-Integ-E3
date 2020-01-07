@@ -1,5 +1,5 @@
 from pyspark.ml import Pipeline
-from pyspark.ml.classification import GBTClassifier
+from pyspark.ml.classification import RandomForestClassifier
 from pyspark.ml.feature import StringIndexer, VectorIndexer, VectorAssembler
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 
@@ -10,12 +10,15 @@ from pyspark.sql.functions import to_timestamp, month, hour, dayofweek
 from pyspark.sql.functions import array, udf
 
 # Inspired from Spark example
-# https://spark.apache.org/docs/latest/ml-classification-regression.html#gradient-boosted-tree-classifier
+# https://spark.apache.org/docs/latest/ml-classification-regression.html#random-forest-classifier
 # https://towardsdatascience.com/machine-learning-with-pyspark-and-mllib-solving-a-binary-classification-problem-96396065d2aa
 
 # PySpark Dataframe tutorials
 # https://www.analyticsvidhya.com/blog/2016/10/spark-dataframe-and-operations/
 # https://sparkbyexamples.com/spark/different-ways-to-create-a-spark-dataframe/
+
+# How to do grid testing
+# https://stackoverflow.com/questions/38767786/spark-mllib-2-0-categorical-features-in-pipeline
 
 spark = SparkSession\
         .builder\
@@ -36,33 +39,30 @@ data = data.withColumn("month", month("starttime"))\
             .withColumn("hour", hour("starttime"))\
             .withColumn("weekday", dayofweek("starttime"))
 
-labelCol = "labels"
-featuresCol = "features"
-
-featuresCols = ["month", "hour", "weekday", "start station id"]
-
-# featuresAssembler = VectorAssembler(inputCols=featuresCols, outputCol=featuresCol)
-# featuresAssembler.transform(data)
-features = array([data[feature].cast("double") for feature in featuresCols]).alias(featuresCol)
-new_schema = ArrayType(DoubleType(), containsNull=False)
-udf_foo = udf(lambda x:x, new_schema)
-features = features.withColumn(featuresCol, udf_foo(featuresCol))
-
-gbt_dataset = data.select(data["end station id"].cast("double").alias(labelCol), features)
-
-gbt_dataset.show()
-
 # Split the data into training and test sets (30% held out for testing)
-(trainingData, testData) = gbt_dataset.randomSplit([0.7, 0.3])
+(trainingData, testData) = data.randomSplit([0.7, 0.3])
 
 
 #### TRAINING
 
-featuresIndexer = VectorIndexer(inputCol= featuresCol, outputCol = "indexedFeatures").fit(gbt_dataset)
+stages = []
 
-# Train a GBT model.
-gbt = GBTClassifier(labelCol=labelCol, featuresCol="indexedFeatures", maxIter=10)
-pipeline = Pipeline(stages=[featuresIndexer, gbt])
+# Setup the pipeline
+strIndexer = StringIndexer(inputCol="start station id", outputCol = "start station index")
+stages += [strIndexer]
+
+endIndexer = StringIndexer(inputCol="end station id", outputCol = "end station index")
+stages += [endIndexer]
+
+featuresCols = ["month", "hour", "weekday", "start station index"]
+assembler = VectorAssembler(inputCols = featuresCols, outputCol="features")
+stages += [assembler]
+
+# Train a random forest model.
+rfc = RandomForestClassifier(labelCol="end station index", featuresCol="features", numTrees=100, maxBins=64, maxDepth=7)
+stages += [rfc]
+
+pipeline = Pipeline(stages=stages)
 
 # Train model.
 model = pipeline.fit(trainingData)
@@ -71,18 +71,18 @@ model = pipeline.fit(trainingData)
 predictions = model.transform(testData)
 
 # Select example rows to display.
-predictions.select("prediction", featuresCol, labelCol).show(5)
+predictions.select("prediction", "features", "end station index").show(5)
 
 
 #### EVALUATION
 
 # Select (prediction, true label) and compute test error
 evaluator = MulticlassClassificationEvaluator(
-    labelCol=labelCol[0], predictionCol="prediction", metricName="accuracy")
+    labelCol="end station index", predictionCol="prediction", metricName="accuracy")
 accuracy = evaluator.evaluate(predictions)
 print("Test Error = %g" % (1.0 - accuracy))
 
-gbtModel = model.stages[0]
-print(gbtModel)  # summary only
+rfcModel = model.stages[-1]
+print(rfcModel)  # summary only
 
 spark.stop()
