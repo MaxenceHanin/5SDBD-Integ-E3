@@ -5,6 +5,7 @@ or trips with similar characteristics
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 from sklearn.cluster import KMeans
 import sklearn.metrics as metrics
@@ -31,10 +32,11 @@ dataset = df[featuresCols]
 
 n_clusters = 5
 
-classifier = KMeans(n_clusters=n_clusters, init="k-means++")
+classifier = KMeans(n_clusters=n_clusters, init="k-means++").fit(dataset)
 
-labels = classifier.fit_predict(dataset)
+labels = classifier.labels_
 
+print(labels)
 
 #### Data analysis
 
@@ -60,6 +62,23 @@ def get_cluster_stats(dataset, labels, as_tuple=False):
         result = pd.merge(result, cluster_var, on="labels", suffixes=("", ".var"))
         return result
 
-print(get_cluster_stats(dataset, labels, True))
+# print(get_cluster_stats(dataset, labels, True))
 
 #### Visualization
+
+print(list(zip(*np.unique(labels, return_counts=True))))
+
+lbl_dataset = dataset.copy()
+lbl_dataset["labels"] = labels
+groups = lbl_dataset.groupby("labels")
+
+# Plot
+fig, ax = plt.subplots()
+ax.margins(0.05) # Optional, just adds 5% padding to the autoscaling
+for name, group in groups:
+    group["weekday"].value_counts().plot(marker='+', linestyle='-', ms=6, label=name)
+    # ax.plot(group["start station latitude"], group["start station longitude"], marker='o', linestyle='', ms=3, label=name)
+    # ax.plot(group["end station latitude"], group["end station longitude"], marker='+', linestyle='', ms=3, label=name)
+ax.legend()
+
+plt.show()

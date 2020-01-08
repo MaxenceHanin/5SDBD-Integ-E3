@@ -25,9 +25,9 @@ with open('../datasets/201801-citibike-tripdata.csv','r') as _in:
     with open('../datasets/201801-clean.csv','w',newline='') as _out:
         writer = csv.writer(_out)
         for line in reader:
-            #(id_o,id_d), tripduration, tripdistance, starthour, weekday, month, usertype, usergender, userage, ((lat_o,long_o),(lat_d,long_d))
             id_o, id_d = line[3], line[7]
-            dur = timedelta(seconds=int(line[0]))
+            dur = int(line[0])
+            # dur = timedelta(seconds=int(line[0]))
             ((lat_o,long_o),(lat_d,long_d)) = ((float(line[5]),float(line[6])),(float(line[9]),float(line[10])))
             dis = haversine(lat_o,long_o,lat_d,long_d)
             st = datetime.strptime(line[1],'%Y-%m-%d %H:%M:%S.%f')
