@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.insa.integ.NYCBike</groupId>
-    <artifactId>DataStorage</artifactId>
+    <artifactId>Storage</artifactId>
     <packaging>war</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>DataStorage</name>

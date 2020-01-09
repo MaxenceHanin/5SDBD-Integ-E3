@@ -12,17 +12,14 @@ import sklearn.metrics as metrics
 
 # https://stats.stackexchange.com/questions/52625/visually-plotting-multi-dimensional-cluster-data
 
-df = pd.read_csv("../datasets/JC-201908-citibike-tripdata.csv")
+df = pd.read_csv("../datasets/201801_clean.csv")
 
-# Create hour and weekday from starttime
-df["date"] = pd.to_datetime(df["starttime"])
-df["hour"] = df["date"].dt.hour
-df["weekday"] = df["date"].dt.weekday
+# print(df)
 
 # select only some features
 # add: "birth year", "gender" for suscribers
-geographicalCols = ["start station latitude", "start station longitude", "end station latitude", "end station longitude"]
-temporalCols = ["hour", "weekday"]
+geographicalCols = ["lat_o","long_o","lat_d","long_d"]
+temporalCols = ["hour", "weekday","duration"]
 featuresCols = geographicalCols + temporalCols
 
 dataset = df[featuresCols]
@@ -30,7 +27,7 @@ dataset = df[featuresCols]
 
 #### Clustering
 
-n_clusters = 5
+n_clusters = 10
 
 classifier = KMeans(n_clusters=n_clusters, init="k-means++").fit(dataset)
 
@@ -66,19 +63,25 @@ def get_cluster_stats(dataset, labels, as_tuple=False):
 
 #### Visualization
 
-print(list(zip(*np.unique(labels, return_counts=True))))
+unique,counts=np.unique(labels,return_counts=True)
+for i in range(len(unique)):
+    print(unique[i],counts[i])
+
+# print(list(zip(*np.unique(labels, return_counts=True))))
 
 lbl_dataset = dataset.copy()
 lbl_dataset["labels"] = labels
 groups = lbl_dataset.groupby("labels")
+# groups = lbl_dataset.groupby(["lat_o","long_o"])
 
 # Plot
 fig, ax = plt.subplots()
 ax.margins(0.05) # Optional, just adds 5% padding to the autoscaling
 for name, group in groups:
-    group["weekday"].value_counts().plot(marker='+', linestyle='-', ms=6, label=name)
-    # ax.plot(group["start station latitude"], group["start station longitude"], marker='o', linestyle='', ms=3, label=name)
-    # ax.plot(group["end station latitude"], group["end station longitude"], marker='+', linestyle='', ms=3, label=name)
+    # group["hour"].value_counts().plot(marker='+', linestyle='', ms=6, label=name)
+    ax.plot(group["lat_o"], group["long_o"], marker='o', linestyle='', ms=3, label=name)
+    ax.plot(group["lat_d"], group["long_d"], marker='+', linestyle='', ms=3, label=name)
+    # plt.show()
 ax.legend()
 
 plt.show()
