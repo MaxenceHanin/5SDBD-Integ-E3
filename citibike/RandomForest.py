@@ -8,6 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from time import time
 
+import pickle
 import pandas as pd
 import csv
 import os
@@ -26,30 +27,25 @@ file.drop(labels="lat_o", axis=1, inplace=True)
 file.drop(labels="long_o", axis=1, inplace=True)
 file.drop(labels="lat_d", axis=1, inplace=True)
 file.drop(labels="long_d", axis=1, inplace=True)
-y = file["id_d"][0:5000]
+y = file["id_d"]
 file.drop(labels="id_d", axis=1, inplace=(True))
-x = file[0:5000]
+x = file
+
 test_size=0.3
 X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=test_size)
-
-
-# In[24]:
-
-
 #Algo Random forest
 
 begin = time()
-clf = RandomForestClassifier(max_depth=15, random_state=0, n_estimators=200)
-clf.fit(X_train, Y_train)
+model = RandomForestClassifier(max_depth=15, random_state=0, n_estimators=200)
+model.fit(X_train, Y_train)
 end = time()
 
-print("Score : ", clf.score(X_test, Y_test))
+print("Score : ", model.score(X_test, Y_test))
 print("Temps d'execution : ", end-begin)
-    
 
+#Sauvegarde modele 
+filename = 'model_random_forest.sav'
+pickle.dump(model, open(filename, 'wb'))
 
-# In[ ]:
-
-
-
-
+#load model
+#loaded_model = pickle.load(open(filename, 'rb'))
