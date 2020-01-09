@@ -1,23 +1,19 @@
 # Services API definition
 
-## ML Storage Service
+## Storage Service
 
+The storage service aims to provide the models, e.g. for the prediction service and data about New York Citibike stations. The resources types are `Model` and `Station`.
+
+### Models
 *URL: https://5sdbd-integ-e3.fr/storage/ml/*
-
-The ML storage service aims to provide the models, e.g. for the prediction service. The only resource type is `Model`.
 
 | Method | HTTP Request | Description |
 |---|---|---|
 | list | GET /models | Returns a list of available models |
 | get | GET /models/[model-ID] | Returns model metadata and URL (json format) |
 
-## Data Storage Service
-
-*URL: https://5sdbd-integ-e3.fr/storage/data/*
-
-The data storage service provides data about new york citibike traffic and stations
-
 ### Stations
+*URL: https://5sdbd-integ-e3.fr/storage/data/*
 
 | Method | HTTP Request | Description |
 |---|---|---|
