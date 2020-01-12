@@ -5,35 +5,44 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import folium
+import math
 
 from sklearn.cluster import KMeans, SpectralClustering
+from sklearn.preprocessing import MinMaxScaler
 import sklearn.metrics as metrics
 
 # https://towardsdatascience.com/understanding-bixi-commuters-an-analysis-of-montreals-bike-share-system-in-python-cb34de0e2304
 
-data = pd.read_csv("../datasets/201801-citibike-tripdata.csv")
+trips_file = "../datasets/201801-citibike-tripdata.csv"
+stations_file = "../../all_stations.csv"
+
+def read_db(fname):
+    return pd.read_csv(fname)
 
 #### Data Processing
 
-#filtering out trips that were less tha
-data = data.drop(data[data["tripduration"] < 120].index)
+def trip_data_processing(data):
+    #filtering out trips that were less than 2 minutes
+    data = data.drop(data[data["tripduration"] < 120].index)
 
-#parsing through date data
-data["starttime"] = pd.to_datetime(data["starttime"], format="%Y-%m-%d %H:%M:%S.%f", errors="coerce")
-data["stoptime"] = pd.to_datetime(data["stoptime"], format="%Y-%m-%d %H:%M:%S.%f", errors="coerce")
+    #parsing through date data
+    data["starttime"] = pd.to_datetime(data["starttime"], format="%Y-%m-%d %H:%M:%S.%f", errors="coerce")
+    data["stoptime"] = pd.to_datetime(data["stoptime"], format="%Y-%m-%d %H:%M:%S.%f", errors="coerce")
 
-#adding a day number column to identify days of the week
-data["day_number"] = pd.to_datetime(data["starttime"]).dt.dayofweek
+    #adding a day number column to identify days of the week
+    data["day_number"] = pd.to_datetime(data["starttime"]).dt.dayofweek
 
-#adding a boolean week day column
-data["week_day_b"] = pd.Series(index=data.index)
-data["week_day_b"] = 1
-data.loc[data["day_number"].isin([5, 6]), "week_day_b"] = 0
+    #adding a boolean week day column
+    data["week_day_b"] = pd.Series(index=data.index)
+    data["week_day_b"] = 1
+    data.loc[data["day_number"].isin([5, 6]), "week_day_b"] = 0
 
-#adding a column for to split the departures in 20 min groups
-data["time_slice"] = data["starttime"].dt.hour * 60 + np.floor(data["starttime"].dt.minute/20)*20
-pd.options.mode.chained_assignment = None
-data["time_slice"] = data["time_slice"].astype("int64")
+    #adding a column to split the departures in 20 min groups (8h-8h20 = 480; 8h20-8h40 = 500; 8h40-9h = 520)
+    data["time_slice"] = data["starttime"].dt.hour * 60 + np.floor(data["starttime"].dt.minute/20)*20
+    pd.options.mode.chained_assignment = None
+    data["time_slice"] = data["time_slice"].astype("int64")
+
+    return data
 
 #### Visualization
 
@@ -60,7 +69,7 @@ def visualizePerDayWeek(data, column_name, color='#0000FF', title='Departure per
     plt.show()
 
 #creates a bar chart with the departures per hour during the weekend
-def visualizePerHourEnd(data, column_name, color='#0000FF', title='Avreage Number of Trips Per Hour During the Weekend - January 2018'):
+def visualizePerHourEnd(data, column_name, color='#0000FF', title='Average Number of Trips Per Hour During the Weekend - January 2018'):
     #WEEKEND
     dataWeekend = data.drop(data[data['week_day_b'] == 1].index)
     plt.figure(figsize=(20, 10))
@@ -73,7 +82,7 @@ def visualizePerHourEnd(data, column_name, color='#0000FF', title='Avreage Numbe
     plt.show()
 
 #creates a bar chart with the departures per hour during the week
-def visualizePerHourWeek(data, column_name, color='#0000FF', title='Avreage Number of Trips Per Hour During the Week - January 2018'):
+def visualizePerHourWeek(data, column_name, color='#0000FF', title='Average Number of Trips Per Hour During the Week - January 2018'):
     #WEEK
     dataWeek = data.drop(data[data['week_day_b'] == 0].index)
     plt.figure(figsize=(20, 10))
@@ -85,17 +94,89 @@ def visualizePerHourWeek(data, column_name, color='#0000FF', title='Avreage Numb
     plt.rcParams.update({'font.size': 22})
     plt.show()
 
-# visualizePerDayWeek(data, 'starttime')
-# visualizePerDayMonth(data,'starttime')
-# visualizePerHourWeek(data, 'starttime')
-# visualizePerHourEnd(data, 'starttime')
+#creates a bar chart with the departures per day of week
+def visualizePerTimeslice(data, column_name, color='#0000FF', title='Departure per timeslot'):
+    plt.figure(figsize=(20, 10))
+    ax = (data[column_name].groupby(data['time_slice'])
+                         .count()).plot(kind="bar", color=color)
+    ax.set_facecolor('#eeeeee')
+    # ax.set_xlim(0,1420)
+    ax.set_xlabel("Timeslot")
+    ax.set_ylabel("Number of trips")
+    ax.set_title(title)
+    plt.show()
+
+#counts the number of departures and arrivals for each station during a specific timeslot during the week
+def flowCount(data, start_time, end_time):
+    stations = read_db(stations_file)
+
+    #drop weekends
+    data = data.drop(data[data['week_day_b'] == 0].index)
+
+    #select time slot
+    data = data.drop(data[data['time_slice'].between(0,start_time)].index)
+    data = data.drop(data[data['time_slice'].between(end_time, 1420)].index)
+
+    #agregate the number of departures per stations
+    data_s = data.groupby('start station id').size().to_frame('departures_cnt').reset_index()
+    data_s = data_s.rename(columns={'start station id':'id'})
+    data_e = data.groupby('end station id').size().to_frame('arrivals_cnt').reset_index()
+    data_e = data_e.rename(columns={'end station id':'id'})
+
+    #add a net departure column
+    stations = pd.merge(stations, data_s, on='id')
+    stations = pd.merge(stations, data_e, on='id')
+    stations['net_departures'] = pd.Series( index=data.index)
+    stations['net_departures'] = stations['departures_cnt'] - stations['arrivals_cnt']
+
+    #replace stations with 0 net_departures by 1 to avoid calcultions using 0
+    stations.loc[stations['net_departures'].eq(0), 'net_departures'] = 1
+
+    return stations
+
+#creates a map with the stations colored based on the flow (red=more departures/net outflux, green=more arrivals/net influx)
+def densityMap(stations, start_time, end_time):
+    #generate a new map
+    Nyc = [40.730610,-73.935242]
+    map = folium.Map(location = Nyc,
+                zoom_start = 12,
+                tiles = "CartoDB positron")
+
+    #calculate stations radius
+    stations['radius'] = pd.Series( index=data.index)
+    stations['radius'] = np.abs(stations['net_departures'])
+    stations['radius'] = stations['radius'].astype(float)
+
+    #set stations color
+    stations['color'] = '#E80018' # red
+    stations.loc[stations['net_departures'].between(-math.inf,0), 'color'] = '#00E85C' # green
+
+    lat = stations['latitude'].values
+    lon = stations['longitude'].values
+    name = stations['name'].values
+    rad = stations['radius'].values
+    color = stations['color'].values
+    net_dep = stations['net_departures']
+
+    #populate map
+    for _lat, _lon, _rad, _color, _name, _nd in zip(lat, lon, rad, color, name, net_dep):
+        folium.Circle(location = [_lat,_lon],
+                            radius = _rad/5,
+                            color = _color,
+                            tooltip = _name + " / net. dep:" +str(_nd),
+                            fill = True).add_to(map)
+
+    #save map
+    f = 'maps/map_density_' + str(start_time) + '_' + str(end_time) + '.html'
+    map.save(f)
 
 #### Clustering
+
 #return an afinity matrix
 def stations_connectivity(data):
     outbound = pd.crosstab(data["start station id"], data["end station id"])
     inbound = pd.crosstab(data["end station id"], data["start station id"])
-    #using the sum gives us and undirected affinity
+    #using the sum gives us an undirected affinity
     #this makes the matrix symmetrical across the diagonal, required by spectral clustering
     connectivity = inbound + outbound
     #spectral clustering also requires the diagonal to be zero
@@ -103,9 +184,11 @@ def stations_connectivity(data):
     connectivity[np.isnan(connectivity)] = 0
     return connectivity
 
+#List stations in each cluster
 def cluster_labels_to_station_ids(connectivity, labels):
     no_clusters = len(set(labels))
 
+    # get station ids from the columns of the connectivity matrix
     station_clusters = [ [] for n in range(0, no_clusters)]
     for idx, label in enumerate(labels):
         station = connectivity.columns[idx]
@@ -125,6 +208,72 @@ def cluster_spectral(data, n_clusters):
 
     return station_clusters
 
+# Kmeans Clustering
+def cluster_kmeans(data, n_clusters):
+
+    #drop weekends
+    data = data.drop(data[data['week_day_b'] == 0].index)
+
+    #only keep spatial and temporal features
+    df = data[["start station latitude", "start station longitude", "end station latitude", "end station longitude","time_slice"]]
+
+    #normalize values
+    scaler = MinMaxScaler()
+    scaled_values = scaler.fit_transform(df)
+    df.loc[:,:] = scaled_values
+    # print(df)
+
+    #Clustering
+    cluster = KMeans(n_clusters=n_clusters, init = 'k-means++')
+    labels = cluster.fit_predict(df)
+    values, counts = np.unique(labels, return_counts=True)
+    print("number for each label")
+    print(counts)
+
+    #inverse normalization
+    unscaled = scaler.inverse_transform(df)
+    df.loc[:,:] = unscaled
+
+    #add cluster to data
+    se = pd.Series(labels)
+    df['cluster'] = se.values
+    print(df)
+
+    return df
+
+#Create stations from clusters
+def stations_labels(data):
+    no_clusters = len(set(data['cluster']))
+    in_station_clusters = [ set() for n in range(0, no_clusters)]
+    out_station_clusters = [ set() for n in range(0, no_clusters)]
+
+    for l in range(no_clusters):
+        in_station_clusters[l] = set(zip(data.loc[data['cluster']==l,'start station latitude'], data.loc[data['cluster']==l,'start station longitude']))
+        out_station_clusters[l] = set(zip(data.loc[data['cluster']==l,'end station latitude'], data.loc[data['cluster']==l,'end station longitude']))
+
+    return(in_station_clusters,out_station_clusters)
+
+def map_cluster_trips(in_st,out_st,label):
+    # Create base map
+    Nyc = [40.730610,-73.935242]
+    map = folium.Map(location = Nyc,
+                     zoom_start = 12,
+                     titles = "CartoDB positron")
+
+    lat = [pos[0] for pos in in_st[label]] + [pos[0] for pos in out_st[label]]
+    lon = [pos[1] for pos in in_st[label]] + [pos[1] for pos in out_st[label]]
+    color = ["#32CD32" for pos in in_st[label]] + ["#FF0000" for pos in out_st[label]]
+
+    # Plot markers for stations
+    for _lat, _lon, _color in zip(lat, lon, color):
+        folium.Circle(location = [_lat, _lon],
+                            radius = 30,
+                            color = _color).add_to(map)
+
+    f = './maps/map_cluster-' + str(label) + '.html'
+    map.save(f)
+
+#Add cluster to stations
 def sations_clust(stations, clustered):
     stations['cluster'] = pd.Series(index=data.index)
     i = 0
@@ -169,13 +318,41 @@ def map_clustured(stations):
                             popup = _name,
                             color = _color).add_to(map)
 
-    f = './map_station_clustered_10.html'
+    f = './maps/map_station_clustered_10.html'
     map.save(f)
 
-# connectivity =  stations_connectivity(data)
-# print(connectivity)
-clustered = cluster_spectral(data, n_clusters=10)
-print(clustered)
-stations = pd.read_csv("../../all_stations.csv")
-stations_clustered = sations_clust(stations, clustered)
-map_clustured(stations_clustered)
+
+if __name__ == '__main__':
+
+    data = read_db(trips_file)
+    stations = read_db(stations_file)
+
+    #### Processing
+    data = trip_data_processing(data)
+
+    #### Visualization
+    # visualizePerDayWeek(data, 'starttime')
+    # visualizePerDayMonth(data,'starttime')
+    # visualizePerHourWeek(data, 'starttime')
+    # visualizePerHourEnd(data, 'starttime')
+    # 14h = 840; 21h = 1260
+    # 7h-7h20 = 420; 9h40-10h = 580
+    # stations_flow = flowCount(data, 420, 580)
+    # densityMap(stations_flow, 420, 580)
+    # 16h-16h20 = 960; 19h40-20h = 1180
+    # stations_flow = flowCount(data, 960, 1180)
+    # densityMap(stations_flow, 960, 1180)
+
+    #### Clustering
+    # connectivity =  stations_connectivity(data)
+    # print(connectivity)
+    # clustered = cluster_spectral(data, n_clusters=10)
+    # print(clustered)
+    # stations_clustered = sations_clust(stations, clustered)
+    # map_clustured(stations_clustered)
+
+    df = cluster_kmeans(data,4)
+    for l in range(4):
+        (st,en) = stations_labels(df)
+        map_cluster_trips(st,en,l)
+        visualizePerTimeslice(df.drop(df[df['cluster'] != l].index),'time_slice')
