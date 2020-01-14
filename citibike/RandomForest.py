@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[22]:
 
 
 from sklearn.ensemble import RandomForestClassifier
@@ -37,20 +37,22 @@ file2.drop(labels="long_d\t", axis=1, inplace=True)
 
 result = pd.merge(file2, file1, how='outer', left_on='id_o', right_on='id').dropna()
 
-y = result["id_d"][0:100000]
+y = result["cluster"][0:100000]
 result.drop(labels="id_d", axis=1, inplace=(True))
 result.drop(labels="id", axis=1, inplace=(True))
+result.drop(labels="cluster", axis=1, inplace=(True))
+
 x = result[0:100000]
 
 
-# In[2]:
+# In[23]:
 
 
 test_size=0.3
 X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=test_size)
 
 
-# In[ ]:
+# In[24]:
 
 
 #Algo Random forest
@@ -68,19 +70,50 @@ for i in min_sample:
         print("Temps d'execution : ", end-begin)
 
 
-# In[3]:
+# In[25]:
 
 
-model = RandomForestClassifier(min_samples_leaf=0.0001, random_state=0, n_estimators = 10)
+model = RandomForestClassifier(min_samples_leaf=1, random_state=0, n_estimators = 10)
 model.fit(X_train, Y_train)
 
 
-# In[ ]:
+# In[20]:
+
+
+print("Score : ", model.score(X_test, Y_test))
+print("Temps d'execution : ", end-begin)
+
+
+# In[10]:
+
+
+print(result)
+
+
+# In[15]:
+
+
+pd.merge(file2, file1, how='outer', left_on='id_o', right_on='id').dropna()[200000:200001]
+
+
+# In[16]:
+
+
+result[200000:200001]
+
+
+# In[14]:
+
+
+model.predict(result[200000:200001])
+
+
+# In[26]:
 
 
 #Sauvegarde modele 
-#filename = 'model_random_forest.sav'
-#pickle.dump(model, open(filename, 'wb'))
+filename = 'model_random_forest.sav'
+pickle.dump(model, open(filename, 'wb'))
 
 #chargement model
 #loaded_model = pickle.load(open(filename, 'rb'))
