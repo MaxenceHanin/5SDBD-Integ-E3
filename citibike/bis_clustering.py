@@ -208,9 +208,8 @@ def cluster_spectral(data, n_clusters):
 
     return station_clusters
 
-# Kmeans Clustering
-def cluster_kmeans(data, n_clusters):
-
+# Kmeans Clustering : Simple, facile à mettre en oeuvre, mais limité
+def cluster_kmeans(data, n_clusters = range(2, 20), metric = "db"):
     #drop weekends
     data = data.drop(data[data['week_day_b'] == 0].index)
 
@@ -224,8 +223,38 @@ def cluster_kmeans(data, n_clusters):
     # print(df)
 
     #Clustering
-    cluster = KMeans(n_clusters=n_clusters, init = 'k-means++')
-    labels = cluster.fit_predict(df)
+    model = None
+    
+    if hasattr(n_clusters, "__iter__"):
+        # Metrics parameters
+        if metric == "db":
+            sense = 1
+            method = metrics.davies_bouldin_score
+        elif metric == "sil":
+            sense = -1
+            method = metrics.silhouette_score
+        else:
+            raise ValueError("Bad metrics provided to cluster_kmeans()")
+        
+        best_score = sense * 10000
+        best_model = None
+        
+        for n in n_clusters:
+            cluster = KMeans(n_clusters=n, init = 'k-means++')
+            labels = cluster.fit_predict(df)
+            score = method(df, labels)
+            print("kmeans: n_cluster == %d, score == %f" % (n, score))
+            
+            if (sense * best_score > sense * score):
+                best_score = score
+                best_model = cluster
+                
+        print("best_score is %f for n = %d" % (best_score, best_model.n_clusters))
+        model = best_model
+    else:
+        model = KMeans(n_clusters=n_clusters, init = 'k-means++')
+        
+    labels = model.fit_predict(df)
     values, counts = np.unique(labels, return_counts=True)
     print("number for each label")
     print(counts)
@@ -240,6 +269,13 @@ def cluster_kmeans(data, n_clusters):
     print(df)
 
     return df
+    
+def get_cluster_count(df):
+    return max(df["cluster"]) + 1
+
+# HDBSCAN clustering : Plus complexe, outsiders, meilleurs résultats ?
+def cluster_hdbscan(data):
+    pass
 
 #Create stations from clusters
 def stations_labels(data):
@@ -352,8 +388,11 @@ if __name__ == '__main__':
     # map_clustured(stations_clustered)
     # stations_clustered.to_csv('../datasets/clustered_stations.csv')
 
-    df = cluster_kmeans(data,4)
-    for l in range(4):
+    df = cluster_kmeans(data, n_clusters=2)
+    cluster_count = get_cluster_count(df)
+    print("%d clusters" % cluster_count)
+    
+    for l in range(cluster_count):
         (st,en) = stations_labels(df)
         map_cluster_trips(st,en,l)
         visualizePerTimeslice(df.drop(df[df['cluster'] != l].index),'time_slice')
