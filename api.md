@@ -23,7 +23,7 @@ The storage service aims to provide the models, e.g. for the prediction service 
 
 ## Predict Service
 
-*URL: https://5sdbd-integ-e3.fr/predict/*
+*URL: https://5sdbd-integ-e3.fr/predictions/predict/*
 
 ### From an origin station and the date
 
@@ -31,4 +31,4 @@ This service predicts the next station based on the origin station and the date.
 
 | Method | HTTP Request | Description |
 |---|---|---|
-| predict_next_station | GET /next_station/[station_id] | Returns a prediction of the arrival station.<br>**Parameters**:<br> - date: date of the prediction (default: now) <br> - age: age of the user <br> - gender: gender of the user|
+| predict_next_station | GET /next_station/[station_id] | Returns a prediction of the arrival station.<br>**Parameters**:<br> - hour: hour for the prediction <br> - weekday: day of the week for the prediction <br> - month: month for the prediction <br> - age: age of the user <br> - gender: gender of the user|
