@@ -5,6 +5,7 @@ package fr.insa.integ.NYCBike.DataStorage.model;
 
 import java.util.UUID;
 
+import org.bson.BsonBinary;
 import org.bson.types.ObjectId;
 
 /**
@@ -14,7 +15,7 @@ public class Model {
 	
 	private ObjectId id;
 	private int idS;
-	private String type;
+	private BsonBinary model;
 	private String name;
 	
 	public Model() {}
@@ -22,25 +23,25 @@ public class Model {
 	/**
 	 * @param id
 	 * @param idS
-	 * @param type
+	 * @param model
 	 * @param name
 	 */
-	public Model(ObjectId id, int idS, String type, String name) {
+	public Model(ObjectId id, int idS, BsonBinary model, String name) {
 		super();
 		this.id = id;
 		this.idS = idS;
-		this.type = type;
+		this.model = model;
 		this.name = name;
 	}
 	
 	/**
-	 * @param type
+	 * @param model
 	 * @param name
 	 */
-	public Model(String type, String name) {
+	public Model(BsonBinary model, String name) {
 		super();
 		this.idS = UUID.randomUUID().hashCode();
-		this.type = type;
+		this.model = model;
 		this.name = name;
 	}
 
@@ -60,12 +61,12 @@ public class Model {
 		this.idS = idS;
 	}
 
-	public String getType() {
-		return type;
+	public BsonBinary getModel() {
+		return model;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setModel(BsonBinary model) {
+		this.model = model;
 	}
 
 	public String getName() {

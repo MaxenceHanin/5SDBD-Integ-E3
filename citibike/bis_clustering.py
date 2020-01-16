@@ -14,7 +14,7 @@ import sklearn.metrics as metrics
 # https://towardsdatascience.com/understanding-bixi-commuters-an-analysis-of-montreals-bike-share-system-in-python-cb34de0e2304
 
 trips_file = "../datasets/201801-citibike-tripdata.csv"
-stations_file = "../../all_stations.csv"
+stations_file = "../datasets/all_stations.csv"
 
 def read_db(fname):
     return pd.read_csv(fname)
@@ -260,9 +260,9 @@ def map_cluster_trips(in_st,out_st,label):
                      zoom_start = 12,
                      titles = "CartoDB positron")
 
-    lat = [pos[0] for pos in in_st[label]] + [pos[0] for pos in out_st[label]]
-    lon = [pos[1] for pos in in_st[label]] + [pos[1] for pos in out_st[label]]
-    color = ["#32CD32" for pos in in_st[label]] + ["#FF0000" for pos in out_st[label]]
+    lat = [pos[0] for pos in out_st[label]] + [pos[0] for pos in in_st[label]]
+    lon = [pos[1] for pos in out_st[label]] + [pos[1] for pos in in_st[label]]
+    color = ["#FF0000" for pos in out_st[label]] + ["#32CD32" for pos in in_st[label]]
 
     # Plot markers for stations
     for _lat, _lon, _color in zip(lat, lon, color):
@@ -270,7 +270,7 @@ def map_cluster_trips(in_st,out_st,label):
                             radius = 30,
                             color = _color).add_to(map)
 
-    f = './maps/map_cluster-' + str(label) + '.html'
+    f = './maps/imap_cluster-' + str(label) + '.html'
     map.save(f)
 
 #Add cluster to stations
@@ -345,11 +345,12 @@ if __name__ == '__main__':
 
     #### Clustering
     # connectivity =  stations_connectivity(data)
-    # print(connectivity)
+    # # print(connectivity)
     # clustered = cluster_spectral(data, n_clusters=10)
-    # print(clustered)
+    # # print(clustered)
     # stations_clustered = sations_clust(stations, clustered)
     # map_clustured(stations_clustered)
+    # stations_clustered.to_csv('../datasets/clustered_stations.csv')
 
     df = cluster_kmeans(data,4)
     for l in range(4):
