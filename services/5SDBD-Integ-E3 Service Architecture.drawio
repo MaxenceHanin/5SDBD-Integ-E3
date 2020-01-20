@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2020-01-20T15:30:53.674Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36" etag="5tcdxMJuFENKnVDo3gVx" version="12.5.5" type="github">
+<mxfile host="www.draw.io" modified="2020-01-20T15:40:43.158Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36" etag="egPCxA8FVRXOgLOSVCeK" version="12.5.5" type="github">
   <diagram id="7f7fHk0LRDouM4dh8-jC" name="Page-1">
     <mxGraphModel dx="1022" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -27,7 +27,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="aoVuLQgdyjjH-0uVmxxl-13" value="&lt;table border=&quot;1&quot; width=&quot;100%&quot; cellpadding=&quot;4&quot; style=&quot;width: 100% ; height: 100% ; border-collapse: collapse&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th align=&quot;center&quot;&gt;Storage Service&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;+ list(): list of models&lt;br&gt;+ get(model-ID): model serialized&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;+ list(): list of citibike stations&lt;br&gt;+ get(station-ID): information on a station&lt;br&gt;+ get_around(station-ID, radius): list of stations within radius of the given station&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" style="text;html=1;strokeColor=none;fillColor=none;overflow=fill;" parent="1" vertex="1">
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-13" value="&lt;table border=&quot;1&quot; width=&quot;100%&quot; cellpadding=&quot;4&quot; style=&quot;width: 100% ; height: 100% ; border-collapse: collapse&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th align=&quot;center&quot;&gt;Storage Service&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;+ list(): list of models&lt;br&gt;+ get(model-ID): serialized model&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;+ list(): list of citibike stations&lt;br&gt;+ get(station-ID): information on a station&lt;br&gt;+ get_around(station-ID, radius): list of stations within radius of the given station&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" style="text;html=1;strokeColor=none;fillColor=none;overflow=fill;" parent="1" vertex="1">
           <mxGeometry x="520" y="19" width="440" height="140" as="geometry"/>
         </mxCell>
         <mxCell id="aoVuLQgdyjjH-0uVmxxl-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="aoVuLQgdyjjH-0uVmxxl-14" target="aoVuLQgdyjjH-0uVmxxl-13" edge="1">
