@@ -9,17 +9,22 @@
   <meta name="author" content="Team E3">
 
   <link rel="stylesheet" href="css/styles.css">
-
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
   <form id="predict-next-station">
-      <label for=station>Station ID:</label>
-      <input id=station type=text /><p/>
+      <label for=station>Station Name:</label>
+      <select name=station id=station></select><p/>
       <label for=date>Date:</label>
       <input id=date type=text /><p/>
-      <input type=submit>
+      <input type=submit value="Make prediction">
   </form>
+  
+  <div id=result></div>
   
   <script src="js/script.js"></script>
 </body>
