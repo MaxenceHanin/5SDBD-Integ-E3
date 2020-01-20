@@ -11,7 +11,7 @@ The returned data is in JSON format.
 | Method | HTTP Request | Description |
 |---|---|---|
 | list | GET /models | Returns a list of available models |
-| get | GET /models/[model-ID] | Returns the model serialized |
+| get | GET /models/[model-ID] | Returns the serialized model |
 
 ### Stations
 *URL: https://5sdbd-integ-e3.fr/storage/data/*
