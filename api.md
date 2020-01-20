@@ -22,7 +22,7 @@ The returned data is in JSON format.
 | get | GET /stations/[station-ID] | Returns information on a specific station |
 | get_around | GET /stations/[station-ID]/around | Returns the list of all the stations near the origin station.<br>**Parameters**:<br> - radius: All station must be in the given radius in meters |
 
-## Predict Service
+## Prediction Service
 
 *URL: https://5sdbd-integ-e3.fr/predictions/predict/*
 
