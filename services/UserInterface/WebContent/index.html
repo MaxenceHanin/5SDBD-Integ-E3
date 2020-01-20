@@ -16,15 +16,27 @@
 </head>
 
 <body>
+  <form id="get-station-info">
+      <label for=station>Station Name:</label>
+      <select name=station id=station2></select><p/>
+      <input type=submit value="Get station information">
+  </form>
+  
+  <div id=result-station-info></div>
+
+	<br/>	<br/>	<br/>	<br/>
   <form id="predict-next-station">
       <label for=station>Station Name:</label>
-      <select name=station id=station></select><p/>
+      <select name=station id=station1></select><p/>
       <label for=date>Date:</label>
-      <input id=date type=text /><p/>
+      <input name=date class=datepicker type=text /><p/>
+      <label for=hour>Hour:</label>
+      <input name=hour type=text /><p/>
       <input type=submit value="Make prediction">
   </form>
   
-  <div id=result></div>
+  <div id=result-next-station></div>
+  
   
   <script src="js/script.js"></script>
 </body>
