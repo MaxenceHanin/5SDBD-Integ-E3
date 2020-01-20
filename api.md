@@ -3,6 +3,7 @@
 ## Storage Service
 
 The storage service aims to provide the models, e.g. for the prediction service and data about New York Citibike stations. The resources types are `Model` and `Station`.
+The returned data is in JSON format.
 
 ### Models
 *URL: https://5sdbd-integ-e3.fr/storage/ml/*
@@ -10,7 +11,7 @@ The storage service aims to provide the models, e.g. for the prediction service 
 | Method | HTTP Request | Description |
 |---|---|---|
 | list | GET /models | Returns a list of available models |
-| get | GET /models/[model-ID] | Returns model metadata and URL (json format) |
+| get | GET /models/[model-ID] | Returns the model serialized |
 
 ### Stations
 *URL: https://5sdbd-integ-e3.fr/storage/data/*
@@ -25,9 +26,10 @@ The storage service aims to provide the models, e.g. for the prediction service 
 
 *URL: https://5sdbd-integ-e3.fr/predictions/predict/*
 
-### From an origin station and the date
+### From an origin station, the date and user data
 
-This service predicts the next station based on the origin station and the date.
+This service predicts the next station based on the origin station, the date and user data.
+The type of the response is plain text.
 
 | Method | HTTP Request | Description |
 |---|---|---|
