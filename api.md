@@ -33,4 +33,4 @@ The type of the response is plain text.
 
 | Method | HTTP Request | Description |
 |---|---|---|
-| predict_next_station | GET /next_station/[station_id] | Returns a prediction of the arrival station.<br>**Parameters**:<br> - hour: hour for the prediction <br> - weekday: day of the week for the prediction (integer within range [0, 6]) <br> - month: month for the prediction (in [1, 12]) <br> - age: age of the user <br> - gender: gender of the user (0 = unknown, 1 = male, 2 = female) |
+| predict_next_station | GET /next_station/[station_id] | Returns a prediction of the arrival station.<br>**Parameters**:<br> - hour: hour for the prediction <br> - weekday: day of the week for the prediction (integer within range [0, 6]) <br> - month: month for the prediction (in [1, 12]) <br> - age: age of the user <br> - gender: gender of the user (0 = unknown, 1 = male, -1 = female) |
