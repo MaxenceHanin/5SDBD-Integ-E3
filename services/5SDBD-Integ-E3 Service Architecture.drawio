@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2020-01-20T15:28:04.898Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36" etag="MHkI5MBtQca_90YjvEPF" version="12.5.5" type="github">
+<mxfile host="www.draw.io" modified="2020-01-20T15:30:53.674Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36" etag="5tcdxMJuFENKnVDo3gVx" version="12.5.5" type="github">
   <diagram id="7f7fHk0LRDouM4dh8-jC" name="Page-1">
     <mxGraphModel dx="1022" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -19,26 +19,31 @@
         <mxCell id="aoVuLQgdyjjH-0uVmxxl-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="aoVuLQgdyjjH-0uVmxxl-13" target="aoVuLQgdyjjH-0uVmxxl-20" edge="1">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
+        <mxCell id="YMOdb_0lnug1s7aZ0Nxb-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="aoVuLQgdyjjH-0uVmxxl-13" target="aoVuLQgdyjjH-0uVmxxl-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="124"/>
+              <mxPoint x="460" y="184"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="aoVuLQgdyjjH-0uVmxxl-13" value="&lt;table border=&quot;1&quot; width=&quot;100%&quot; cellpadding=&quot;4&quot; style=&quot;width: 100% ; height: 100% ; border-collapse: collapse&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th align=&quot;center&quot;&gt;Storage Service&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;+ list(): list of models&lt;br&gt;+ get(model-ID): model serialized&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;+ list(): list of citibike stations&lt;br&gt;+ get(station-ID): information on a station&lt;br&gt;+ get_around(station-ID, radius): list of stations within radius of the given station&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" style="text;html=1;strokeColor=none;fillColor=none;overflow=fill;" parent="1" vertex="1">
-          <mxGeometry x="520" y="14" width="440" height="140" as="geometry"/>
+          <mxGeometry x="520" y="19" width="440" height="140" as="geometry"/>
         </mxCell>
         <mxCell id="aoVuLQgdyjjH-0uVmxxl-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="aoVuLQgdyjjH-0uVmxxl-14" target="aoVuLQgdyjjH-0uVmxxl-13" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="780" y="14" as="targetPoint"/>
-            <Array as="points">
-              <mxPoint x="470" y="84"/>
-              <mxPoint x="470" y="84"/>
-            </Array>
+            <Array as="points"/>
           </mxGeometry>
         </mxCell>
         <mxCell id="YMOdb_0lnug1s7aZ0Nxb-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="aoVuLQgdyjjH-0uVmxxl-14" target="aoVuLQgdyjjH-0uVmxxl-12">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="aoVuLQgdyjjH-0uVmxxl-14" value="Prediction Service" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
-          <mxGeometry x="15" y="54" width="390" height="60" as="geometry"/>
+          <mxGeometry x="15" y="54" width="390" height="70" as="geometry"/>
         </mxCell>
         <mxCell id="aoVuLQgdyjjH-0uVmxxl-15" value="+ predict_next_station(station-ID, hour, weekday, month, age, gender): prediction of the destination station " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" parent="aoVuLQgdyjjH-0uVmxxl-14" vertex="1">
-          <mxGeometry y="26" width="390" height="34" as="geometry"/>
+          <mxGeometry y="26" width="390" height="44" as="geometry"/>
         </mxCell>
         <mxCell id="aoVuLQgdyjjH-0uVmxxl-20" value="DB&lt;br&gt;&lt;br&gt;Collection Stations&lt;br&gt;Collection Models" style="shape=datastore;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="680" y="194" width="120" height="120" as="geometry"/>
