@@ -1,1 +1,49 @@
-<mxfile host="www.draw.io" modified="2020-01-08T09:35:04.881Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" etag="mrB06tHwLTMdnOEHn6V1" version="12.4.9" type="device"><diagram id="7f7fHk0LRDouM4dh8-jC" name="Page-1">xVhtb9s2EP41BroPKfRiOclH28nWAC6Q1Wi3fQpokZaYUKJH0bHdX787iZRESU4cxFmLoBZPxyN599zdQ43Cebb/Q5FN+lVSJkaBR/ej8GYUBIE3HsMPSg6V5OrSCBLFaSXyG8GS/2RG6BnpllNWOIpaSqH5xhXGMs9ZrB0ZUUruXLW1FO6qG5KwnmAZE9GX/sWpTs0pgstG/oXxJLUr+5Pr6k1GrLI5SZESKnctUXg7CudKSl09Zfs5E+g865dq3u9H3tYbUyzXp0wg8sd28WdCD4+PXy687Y9svxcXQWXlmYitOfD3gimzYX2wXoC9b/Bxm4lprKUahbNnpjQHPy3Iiol7WXDNZQ4qK6m1zEBB4IsZiZ8SJbc5nUuB88BauC7/tWxMBU9wrpYbkKY6EzDw4VFuteA5m9fB9UBotgxz2f6oL/zawwBNJjOm1QFU7IRrExSDyiAyqNw1MR4blbQV3isjIwZVSW25cTw8GN+/IQ6+3wtELwgsp1NENIxiQYqCx66zqgmM9gD9qldap44GTm1ligmi+bNrfsgVZoV7yWHh2ul1Tnedbk0UcqtiZma1kfyaIb9jSBOVMN0zVEamPvY7gnXVjw14fWmGUulUJjIn4raRzsokYNRguNFZSAR9GcBHpvXBlECy1dINL9tz/TdO/xyZ0T/GGD7f7NuDgx3kcNLWJBziLP+z54dW0EwtR87ce6Y4uIspJ/dexxg4pwzmS140CK+C9ZJiNIzak+H4vsw8ViK9uxz8siZwyMBbMvXM8amDCzfqu5RrttyQ0i87aJhDCfy+wha5qeEPFDY/GMjxyUdVtuCUyvbx2XNO4IYnArfV5n8FcMMBx08EbHimyUogaldSUVY15cm/WyQiM795dFBTv/fgUJGjFMNmNoRSnieO6tjRasJthcb4FF5aq1WJqYE58Kra8kUshSCbglU69ai14CQxv9WJVxIYaFeoepIUI2HYSGMtZpjqfetLoELIH1v5X9mBgKEp1zgK+yv2JbSR4IkXvNCffqsOKuAZfuQaCSZy7QLr0E1h565a1mYAzk+l0sXdjZmfGX4OCCOUaIKnzWE97/u3u/Y26Zn2Ljp7LzceA1Vc8SdWgoIgbRzeP7J/OILRaQ7B87VUWSlEX+B/pLH1gqkHUpaRlsVRMMd8JJRviwEXN9uDTNApz2tlq6FTPEYCyZz3t3C6J1E4hFCUV7lq5Z3KCZ1Cu4Wu0Eo+Mcu2c5lj+VxzIToiCX1mLUo2iW/P034i21raPHqISPvjD2PS17+EnNVEq02zWqzrCMk6Z1san8qnwne2pWFWfnnVoR6nkXK40pBDS22DCsXxZSLPXeayc+t9kzo8VOuf934w7nXee8Uoj03JOkYWix3PBKkSVubaQhZxEqdc0AU5wIUYJFBn4ic7mqVS8Z+gT5oSQJQ2UA0mw+nfTFqiMbOMYgVMu7fo8zuir2TvKC5IYS/lpgXzVbllnJhBvHk+M58D3n1zP9hq0i8wQ3w2Cj6qvkQDtAobjAnxQw4l+cF0gl6rgabLTKNxINFqJpQVmue2vdmWMg9GU6+HGFP+T635ltkIttZHP78UcD8BKrcodW7GjeSb8e7Y7R4ppxS6HxZR2CtZ1Zg1mQwbjWbwB7ufY0GMSldEyDTtGP5QXek5NFutCC+xwABdO1boU4HzQi4ehROkx0lwsnrnvx55PTjdlMSsz2K6EgiuYHVNOcZ+HC3gf6N5OJpeCTa0wpGvfsgUgbsp9r9cYSfdPnJ94hW2Fr4hSDBsvsBW9b/5jh3e/gc=</diagram></mxfile>
+<mxfile host="www.draw.io" modified="2020-01-20T15:28:04.898Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36" etag="MHkI5MBtQca_90YjvEPF" version="12.5.5" type="github">
+  <diagram id="7f7fHk0LRDouM4dh8-jC" name="Page-1">
+    <mxGraphModel dx="1022" dy="437" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-2" value="User" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="190" y="254" width="40" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-11" value="" style="endArrow=classic;html=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="210" y="254" as="sourcePoint"/>
+            <mxPoint x="210" y="214" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-12" value="User Interface Service" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="150" y="154" width="120" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="aoVuLQgdyjjH-0uVmxxl-13" target="aoVuLQgdyjjH-0uVmxxl-20" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-13" value="&lt;table border=&quot;1&quot; width=&quot;100%&quot; cellpadding=&quot;4&quot; style=&quot;width: 100% ; height: 100% ; border-collapse: collapse&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;th align=&quot;center&quot;&gt;Storage Service&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;+ list(): list of models&lt;br&gt;+ get(model-ID): model serialized&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;+ list(): list of citibike stations&lt;br&gt;+ get(station-ID): information on a station&lt;br&gt;+ get_around(station-ID, radius): list of stations within radius of the given station&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;" style="text;html=1;strokeColor=none;fillColor=none;overflow=fill;" parent="1" vertex="1">
+          <mxGeometry x="520" y="14" width="440" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="aoVuLQgdyjjH-0uVmxxl-14" target="aoVuLQgdyjjH-0uVmxxl-13" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="780" y="14" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="470" y="84"/>
+              <mxPoint x="470" y="84"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="YMOdb_0lnug1s7aZ0Nxb-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="aoVuLQgdyjjH-0uVmxxl-14" target="aoVuLQgdyjjH-0uVmxxl-12">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-14" value="Prediction Service" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="15" y="54" width="390" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-15" value="+ predict_next_station(station-ID, hour, weekday, month, age, gender): prediction of the destination station " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;" parent="aoVuLQgdyjjH-0uVmxxl-14" vertex="1">
+          <mxGeometry y="26" width="390" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="aoVuLQgdyjjH-0uVmxxl-20" value="DB&lt;br&gt;&lt;br&gt;Collection Stations&lt;br&gt;Collection Models" style="shape=datastore;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="194" width="120" height="120" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
