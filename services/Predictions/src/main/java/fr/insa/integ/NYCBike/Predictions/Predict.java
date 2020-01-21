@@ -24,10 +24,11 @@ import org.json.simple.parser.ParseException;
 @Path("predict")
 public class Predict {
 
-	String rscurl = "http://localhost:8081/5sdbd-integ-e3.fr/storage/ml/";
+	String rscurl = "http://localhost:8080/5sdbd-integ-e3.fr/storage/ml/";
 	int mid = 42;
-	String path = "C:\\Users\\linam\\Documents\\INSA\\5A\\Projet_Integrateur\\5SDBD-Integ-E3\\services\\";
-
+//	String path = "C:\\Users\\linam\\Documents\\INSA\\5A\\Projet_Integrateur\\5SDBD-Integ-E3\\services\\";
+	String path = "/home/user/Documents/Reponses/";
+	
 	@GET
 	@Path("/next_station/{station-id}")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -37,8 +38,8 @@ public class Predict {
 
 		Client client = ClientBuilder.newClient();
 
-		Response resp = client.target(rscurl + "models/" + mid).request().get();
-		String ml = resp.readEntity(String.class); //
+		Response resp = client.target(rscurl + "models/" + idS).request().get();
+		String ml = resp.readEntity(String.class);
 		System.out.println("Reponse get model: " + ml);
 
 		// Parse JSON object
