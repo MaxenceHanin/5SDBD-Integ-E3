@@ -366,6 +366,8 @@ if __name__ == '__main__':
     #### Processing
     data = trip_data_processing(data)
 
+    todo = ["spectral"]
+
     #### Visualization
     # visualizePerDayWeek(data, 'starttime')
     # visualizePerDayMonth(data,'starttime')
@@ -380,19 +382,21 @@ if __name__ == '__main__':
     # densityMap(stations_flow, 960, 1180)
 
     #### Clustering
-    # connectivity =  stations_connectivity(data)
-    # # print(connectivity)
-    # clustered = cluster_spectral(data, n_clusters=10)
-    # # print(clustered)
-    # stations_clustered = sations_clust(stations, clustered)
-    # map_clustured(stations_clustered)
-    # stations_clustered.to_csv('../datasets/clustered_stations.csv')
+    if "spectral" in todo:
+        connectivity =  stations_connectivity(data)
+        # print(connectivity)
+        clustered = cluster_spectral(data, n_clusters=10)
+        # print(clustered)
+        stations_clustered = sations_clust(stations, clustered)
+        map_clustured(stations_clustered)
+        stations_clustered.to_csv('../datasets/clustered_stations.csv')
 
-    df = cluster_kmeans(data, n_clusters=2)
-    cluster_count = get_cluster_count(df)
-    print("%d clusters" % cluster_count)
-    
-    for l in range(cluster_count):
-        (st,en) = stations_labels(df)
-        map_cluster_trips(st,en,l)
-        visualizePerTimeslice(df.drop(df[df['cluster'] != l].index),'time_slice')
+    if "kmeans" in todo:
+        df = cluster_kmeans(data, n_clusters=2)
+        cluster_count = get_cluster_count(df)
+        print("%d clusters" % cluster_count)
+        
+        for l in range(cluster_count):
+            (st,en) = stations_labels(df)
+            map_cluster_trips(st,en,l)
+            visualizePerTimeslice(df.drop(df[df['cluster'] != l].index),'time_slice')

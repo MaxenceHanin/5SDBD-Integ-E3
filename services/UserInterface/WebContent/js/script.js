@@ -66,11 +66,11 @@ window.onload = function() {
     predict_next_station.submit(function(e) {
     	e.preventDefault();
     	
-        formData = new FormData(predict_next_station.get(0));
-        station_name = formData.get("station");
-        station_id = stationList[station_name];
-        date = new Date(formData.get("date"));
-        hour = parseInt(formData.get("hour"));
+        var formData = new FormData(predict_next_station.get(0));
+        var station_name = formData.get("station");
+        var station_id = stationList[station_name];
+        var date = new Date(formData.get("date"));
+        var hour = parseInt(formData.get("hour"));
         
         if (!station_id) {
             document.getElementById("result-next-station").innerHTML = "Bad station id";
@@ -82,10 +82,14 @@ window.onload = function() {
         console.log(address);
         
         sendGet(address, function(responseText) {
-        	val = JSON.parse(responseText);
-            // Returns station id, name, latitude and longitude
-            resultStr = val["idS"] + ": " + val["stationName"] + " (" + val["latitude"] + ", " + val["longitude"] + ")<br/>";
-            document.getElementById("result-next-station").innerHTML = resultStr;
+        	var station_id = parseInt(responseText);
+        	console.log(station_id);
+        	
+        	sendGet("http://localhost:8080/5sdbd-integ-e3/storage/data/stations/" + station_id, function(responseText) {
+        		var val = JSON.parse(responseText);
+                resultStr = val["idS"] + ": " + val["stationName"] + " (" + val["latitude"] + ", " + val["longitude"] + ")<br/>";
+                document.getElementById("result-next-station").innerHTML = resultStr;
+        	});
         });
         
         return false;

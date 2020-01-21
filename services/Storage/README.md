@@ -3,8 +3,8 @@
 - ["httpservlet clas not found"](https://howtodoinjava.com/eclipse/solved-the-superclass-javax-servlet-http-httpservlet-was-not-found-on-the-java-build-path-in-eclipse/)
 
 - Set the context roots: 
-	- **Predictions** : 5sdbd-integ-e3/predictions/
-	- **Storage** : 5sdbd-integ-e3/storage/
+	- **Predictions** : 5sdbd-integ-e3/predictions
+	- **Storage** : 5sdbd-integ-e3/storage
 	- **UserInterface** : citibike-app
 
 ## Help and tutorials

@@ -38,9 +38,9 @@ public class Predict {
 
 		Client client = ClientBuilder.newClient();
 
-		Response resp = client.target(rscurl + "models/" + idS).request().get();
+		Response resp = client.target(rscurl + "models/" + mid).request().get();
 		String ml = resp.readEntity(String.class);
-		System.out.println("Reponse get model: " + ml);
+		System.out.println("Reponse get model: " + ml.substring(0, Math.min(100, ml.length())) + "...");
 
 		// Parse JSON object
 		JSONParser parser = new JSONParser();
@@ -60,7 +60,7 @@ public class Predict {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		// Run python script
 		Process process;
 		try {
